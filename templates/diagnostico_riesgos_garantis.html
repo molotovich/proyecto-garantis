@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Evalúa el nivel de exposición al riesgo de tu empresa en menos de 3 minutos con el Diagnóstico de Riesgos Empresariales de Garantis.">
+<title>Diagnóstico de Riesgos Empresariales — Garantis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
+body {
+  background-color: #0b132b;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, hsla(225,39%,30%,0.3) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, hsla(339,49%,30%,0.2) 0, transparent 50%),
+    radial-gradient(at 50% 100%, hsla(220,50%,15%,1) 0, transparent 100%);
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  display: flex; justify-content: center;
+  align-items: center;
+}
+
+:root {
+  --g-dark: #2b2d42;
+  --g-blue: #2a7fc1;
+  --g-blue-light: #4aa3e0;
+  --g-violet: #6b3fa0;
+  --g-bg: #f4f7fb;
+  --g-bg2: #eaf1f8;
+  --g-white: #ffffff;
+  --g-border: #d0dce8;
+  --g-text: #2b2d42;
+  --g-muted: #6b7a8d;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+.app {
+  width: 100%; max-width: 640px;
+  background: #f4f7fb;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25), 0 0 30px rgba(42, 127, 193, 0.15);
+  padding-bottom: 2.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #1a3a5c 0%, #2a7fc1 55%, #6b3fa0 100%);
+  padding: 2.5rem 2rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 28px;
+  background: #f4f7fb;
+  border-radius: 60% 60% 0 0 / 28px 28px 0 0;
+}
+.logo-wrap {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; margin-bottom: 1.75rem;
+}
+.logo-shield { width: 44px; height: 50px; }
+.logo-brand { font-size: 24px; font-weight: 900; letter-spacing: 3px; color: white; line-height: 1; }
+.logo-sub { font-size: 10px; letter-spacing: 2px; color: rgba(255,255,255,0.7); }
+.hero-badge {
+  display: inline-block; font-size: 10px; letter-spacing: 2px;
+  color: rgba(255,255,255,0.85); border: 0.5px solid rgba(255,255,255,0.35);
+  padding: 4px 16px; border-radius: 20px; margin-bottom: 1rem;
+}
+.hero h1 { font-size: 22px; color: white; font-weight: 700; line-height: 1.3; margin-bottom: 0.5rem; }
+.hero p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+
+/* PROGRESS */
+.prog-wrap { padding: 1.25rem 1.5rem 0; }
+.progress-bar { height: 4px; background: var(--g-border); border-radius: 2px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--g-blue), var(--g-violet));
+  border-radius: 2px; transition: width 0.4s ease;
+}
+.step-indicator {
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; padding: 0.75rem 0 0.25rem; flex-wrap: wrap;
+}
+.step-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--g-border); transition: background 0.3s, transform 0.3s;
+}
+.step-dot.active { background: var(--g-blue); transform: scale(1.5); }
+.step-dot.done { background: var(--g-violet); }
+
+/* CARD */
+.card {
+  background: white; border: 0.5px solid var(--g-border);
+  border-radius: var(--radius-lg); padding: 1.5rem;
+  margin: 1rem 1.5rem 0;
+}
+.card-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1.25rem; }
+.q-num {
+  min-width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--g-blue), var(--g-violet));
+  color: white; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+.q-text { font-size: 15px; font-weight: 600; color: var(--g-dark); line-height: 1.4; padding-top: 6px; }
+.q-sub { font-size: 12px; color: var(--g-muted); margin-top: 4px; }
+
+/* OPTIONS */
+.options-grid { display: grid; gap: 8px; }
+.option-btn {
+  text-align: left; padding: 11px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--g-border);
+  background: #f4f7fb; color: var(--g-text);
+  font-size: 13px; cursor: pointer;
+  transition: all 0.18s;
+  display: flex; align-items: center; gap: 10px;
+}
+.option-btn:hover { border-color: var(--g-blue); background: #e5f1fb; }
+.option-btn.selected { border-color: var(--g-blue); background: #d6eaf8; color: #1a3a5c; font-weight: 600; }
+.opt-icon { font-size: 17px; color: var(--g-blue); flex-shrink: 0; }
+.option-btn.selected .opt-icon { color: #1a3a5c; }
+
+.checkbox-group { display: grid; gap: 8px; }
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; border-radius: var(--radius-md);
+  border: 1px solid var(--g-border); background: #f4f7fb;
+  cursor: pointer; transition: all 0.18s;
+  font-size: 13px; color: var(--g-text);
+}
+.check-item:hover { border-color: var(--g-blue); }
+.check-item.checked { border-color: var(--g-blue); background: #d6eaf8; color: #1a3a5c; font-weight: 600; }
+.check-box {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 1.5px solid var(--g-border); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center; font-size: 11px;
+}
+.check-item.checked .check-box {
+  background: linear-gradient(135deg, var(--g-blue), var(--g-violet));
+  border-color: var(--g-blue); color: white;
+}
+
+/* RADIO DOT en opciones single */
+.radio-dot {
+  width: 18px; height: 18px; min-width: 18px;
+  border: 1.5px solid var(--g-border); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.18s;
+}
+.radio-dot-inner {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: transparent; transition: background 0.18s;
+}
+.option-btn.selected .radio-dot {
+  border-color: var(--g-blue);
+  background: linear-gradient(135deg, var(--g-blue), var(--g-violet));
+}
+.option-btn.selected .radio-dot-inner { background: white; }
+
+/* NAV */
+.nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; }
+.btn-prev {
+  padding: 9px 18px; border: 1px solid var(--g-border);
+  border-radius: var(--radius-md); background: transparent;
+  color: var(--g-muted); cursor: pointer; font-size: 13px;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-prev:hover { background: var(--g-bg2); }
+.btn-next {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--g-blue) 0%, var(--g-violet) 100%);
+  border: none; border-radius: var(--radius-md);
+  color: white; cursor: pointer; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.4px; transition: opacity 0.2s;
+}
+.btn-next:hover { opacity: 0.9; }
+
+/* FORM */
+.id-form { display: grid; gap: 12px; }
+.id-form label { font-size: 10px; color: var(--g-muted); display: block; margin-bottom: 5px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+.id-form input, .id-form select {
+  width: 100%; padding: 10px 13px;
+  border: 1px solid var(--g-border); border-radius: var(--radius-md);
+  background: #f4f7fb; color: var(--g-dark); font-size: 13px;
+  transition: border-color 0.2s;
+}
+.id-form input:focus, .id-form select:focus { outline: none; border-color: var(--g-blue); background: white; }
+.id-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* RESULTADO */
+.result-hero {
+  background: linear-gradient(135deg, #1a3a5c 0%, #2a7fc1 55%, #6b3fa0 100%);
+  border-radius: var(--radius-lg); padding: 2rem;
+  margin: 1rem 1.5rem 0; text-align: center;
+}
+.result-hero .company-name { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+.result-hero h2 { color: white; font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.result-hero .respondent { color: rgba(255,255,255,0.7); font-size: 12px; }
+
+.score-wrap { display: flex; flex-direction: column; align-items: center; padding: 1.5rem 0 0.5rem; }
+.score-big { font-size: 56px; font-weight: 800; line-height: 1; }
+.score-sub { font-size: 12px; color: var(--g-muted); margin-top: 5px; }
+.score-badge {
+  display: inline-block; padding: 6px 22px; border-radius: 20px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; margin-top: 12px;
+}
+
+.section-title {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--g-muted); margin: 1.25rem 1.5rem 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title::after { content: ''; flex: 1; height: 0.5px; background: var(--g-border); }
+
+/* MATRIX */
+.matrix-wrap { overflow-x: auto; }
+table.risk-matrix { border-collapse: collapse; width: 100%; font-size: 10px; }
+.risk-matrix th, .risk-matrix td { padding: 7px 5px; text-align: center; border: 1px solid #d0dce8; }
+.risk-matrix .hd-main { background: linear-gradient(90deg, #1a3a5c, #2a7fc1); color: white; font-weight: 700; font-size: 11px; }
+.risk-matrix .hd-col { background: #1a3a5c; color: #a8c4e0; font-size: 9px; }
+.risk-matrix .hd-row { background: #eaf1f8; color: #2b2d42; font-size: 9px; }
+.risk-matrix .cell-bajo { background: #52b788; color: #1b4332; font-weight: 600; }
+.risk-matrix .cell-medio { background: #f4d03f; color: #7d5a00; font-weight: 600; }
+.risk-matrix .cell-alto { background: #f5a623; color: #7b3e00; font-weight: 600; }
+.risk-matrix .cell-muyalto { background: #e74c3c; color: #500000; font-weight: 600; }
+@keyframes pulse-border {
+  0% { outline-color: var(--g-blue); box-shadow: 0 0 0 0px rgba(42,127,193,0.4); }
+  50% { outline-color: var(--g-violet); box-shadow: 0 0 8px 4px rgba(107,63,160,0.3); }
+  100% { outline-color: var(--g-blue); box-shadow: 0 0 0 0px rgba(42,127,193,0.4); }
+}
+.risk-matrix .cell-user {
+  position: relative;
+  outline: 3px solid var(--g-blue);
+  outline-offset: -3px;
+  animation: pulse-border 2s infinite;
+  font-weight: 800 !important;
+  z-index: 5;
+}
+
+/* FINDINGS */
+.findings-grid { display: grid; gap: 8px; margin: 0 1.5rem; }
+.finding-card {
+  border-radius: var(--radius-md); padding: 13px 15px;
+  border: 0.5px solid; display: flex; gap: 12px; align-items: flex-start;
+}
+.fc-icon { font-size: 20px; flex-shrink: 0; padding-top: 1px; }
+.fc-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.fc-text { font-size: 12px; line-height: 1.55; }
+.finding-card.danger { background: #fdf0f0; border-color: #f0b0b0; color: #5a1a1a; }
+.finding-card.warning { background: #fffbea; border-color: #f0d070; color: #5a4000; }
+.finding-card.success { background: #eaf5ee; border-color: #90d0a0; color: #1a4a2a; }
+
+/* AGENT */
+.agent-card {
+  background: white; border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 0 2px #2a7fc1, 0 0 0 3px #6b3fa0;
+  padding: 1.5rem; display: flex; gap: 16px; align-items: center;
+  margin: 0 1.5rem;
+}
+.agent-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--g-blue), var(--g-violet));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 800; color: white; flex-shrink: 0;
+}
+.agent-name { font-size: 17px; font-weight: 700; color: var(--g-dark); margin-bottom: 2px; }
+.agent-title { font-size: 11px; color: var(--g-muted); margin-bottom: 8px; }
+.agent-phone {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(90deg, var(--g-blue), var(--g-violet));
+  color: white; padding: 6px 18px; border-radius: 20px;
+  font-size: 14px; font-weight: 700;
+}
+.agent-cta { font-size: 12px; color: var(--g-muted); margin-top: 7px; font-style: italic; }
+
+.risks-tag-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+.risk-tag {
+  background: #d6eaf8; color: #1a3a5c;
+  padding: 4px 13px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; border: 0.5px solid #a8ccea;
+}
+
+.restart-btn {
+  width: calc(100% - 3rem); display: block;
+  margin: 1rem 1.5rem 0; padding: 12px; background: transparent;
+  border: 1px solid var(--g-border); border-radius: var(--radius-md);
+  color: var(--g-muted); font-size: 13px; cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.restart-btn:hover { background: var(--g-bg2); }
+
+/* CTA ASESORÍA */
+.cta-asesoria-card {
+  background: white; border-radius: var(--radius-lg);
+  border: 1.5px solid #d0dce8;
+  padding: 1.5rem; margin: 0 1.5rem;
+  text-align: center;
+}
+.cta-asesoria-card .cta-title {
+  font-size: 17px; font-weight: 700; color: var(--g-dark);
+  margin-bottom: 6px;
+}
+.cta-asesoria-card .cta-sub {
+  font-size: 12px; color: var(--g-muted); margin-bottom: 1.25rem; line-height: 1.5;
+}
+.cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.cta-btn-si {
+  padding: 11px 28px;
+  background: linear-gradient(135deg, #2a7fc1, #6b3fa0);
+  color: white; border: none; border-radius: var(--radius-md);
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: opacity 0.2s;
+}
+.cta-btn-si:hover { opacity: 0.88; }
+.cta-btn-no {
+  padding: 11px 24px;
+  background: transparent; color: var(--g-muted);
+  border: 1px solid var(--g-border); border-radius: var(--radius-md);
+  font-size: 13px; cursor: pointer;
+  transition: all 0.2s;
+}
+.cta-btn-no:hover { background: var(--g-bg2); }
+.cta-resp-si {
+  background: #eaf5ee; border-radius: var(--radius-md);
+  padding: 14px; text-align: center; margin-top: 1rem;
+  color: #1a4a2a; font-size: 13px; line-height: 1.6;
+  display: none;
+}
+.cta-resp-no {
+  background: #f4f7fb; border-radius: var(--radius-md);
+  padding: 14px; text-align: center; margin-top: 1rem;
+  color: var(--g-muted); font-size: 13px; line-height: 1.6;
+  display: none;
+}
+/* WA BUTTON */
+.wa-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #25d366; color: white;
+  padding: 10px 22px; border-radius: 25px;
+  font-size: 14px; font-weight: 700;
+  text-decoration: none; margin-top: 10px;
+  transition: background 0.2s;
+}
+.wa-btn:hover { background: #1da851; }
+
+.garantis-footer {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; padding: 1.5rem 1.5rem 0;
+  border-top: 0.5px solid var(--g-border); margin: 1.5rem 1.5rem 0;
+}
+.gf-brand { font-size: 14px; font-weight: 900; letter-spacing: 2px; color: var(--g-dark); }
+.gf-sub { font-size: 9px; letter-spacing: 1.5px; color: var(--g-blue); text-transform: uppercase; }
+
+.hidden { display: none; }
+
+@media (max-width: 500px) {
+  .id-row { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 18px; }
+  .card { margin: 0.75rem 1rem 0; padding: 1.25rem; }
+  .agent-card { flex-direction: column; text-align: center; margin: 0 1rem; }
+  .restart-btn { width: calc(100% - 2rem); margin: 1rem 1rem 0; }
+  .findings-grid { margin: 0 1rem; }
+  .section-title { margin: 1rem 1rem 0; }
+  .result-hero { margin: 1rem 1rem 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animated-fade {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="logo-wrap">
+      <svg class="logo-shield" viewBox="0 0 44 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 2L5 10v15c0 11 8 20 17 23 9-3 17-12 17-23V10L22 2z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+        <path d="M30 9 C37 17, 38 30, 29 42" stroke="#4aa3e0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M25 13 C32 21, 33 34, 25 44" stroke="#8b5fbf" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+      </svg>
+      <div>
+        <div class="logo-brand">GARANTIS</div>
+        <div class="logo-sub">Asesores &nbsp;|&nbsp; Seguros</div>
+      </div>
+    </div>
+    <div class="hero-badge">Herramienta de diagnóstico empresarial</div>
+    <h1>Diagnóstico de Riesgos<br>Empresariales</h1>
+    <p>Evalúa el nivel de exposición al riesgo de tu empresa<br>en menos de 3 minutos</p>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+    <div class="step-indicator" id="dots"></div>
+  </div>
+
+  <!-- STEP 0 -->
+  <div id="step-0" class="card">
+    <div class="card-top">
+      <div class="q-num"><i class="ti ti-user"></i></div>
+      <div>
+        <div class="q-text">¿Quién responde este diagnóstico?</div>
+        <div class="q-sub">Información confidencial — solo para personalizar tu análisis.</div>
+      </div>
+    </div>
+    <div class="id-form">
+      <div>
+        <label>Nombre completo *</label>
+        <input type="text" id="f-nombre" placeholder="Ej. Carlos Martínez López">
+      </div>
+      <div class="id-row">
+        <div>
+          <label>Cargo / Rol *</label>
+          <select id="f-cargo">
+            <option value="">Seleccionar...</option>
+            <option>Director General</option>
+            <option>Dueño / Socio</option>
+            <option>Gerente General</option>
+            <option>Gerente de Operaciones</option>
+            <option>Gerente Administrativo</option>
+            <option>Gerente de Finanzas</option>
+            <option>Otro directivo</option>
+          </select>
+        </div>
+        <div>
+          <label>Sector de la empresa *</label>
+          <select id="f-sector">
+            <option value="">Seleccionar...</option>
+            <option>Petróleo y Gas</option>
+            <option>Construcción</option>
+            <option>Manufactura</option>
+            <option>Servicios industriales</option>
+            <option>Transporte y logística</option>
+            <option>Comercio</option>
+            <option>Educación</option>
+            <option>Salud</option>
+            <option>Otro</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label>Nombre de la empresa *</label>
+        <input type="text" id="f-empresa" placeholder="Ej. Grupo Energético del Sureste">
+      </div>
+      <div>
+        <label>Correo electrónico</label>
+        <input type="email" id="f-email" placeholder="correo@empresa.com">
+      </div>
+    </div>
+    <div class="nav-row">
+      <span></span>
+      <button class="btn-next" onclick="startQuiz()">Comenzar diagnóstico →</button>
+    </div>
+  </div>
+
+  <div id="steps-container" class="hidden"></div>
+  <div id="result-section" class="hidden"></div>
+
+  <div class="garantis-footer">
+    <svg width="28" height="32" viewBox="0 0 44 50" fill="none">
+      <path d="M30 9 C37 17,38 30,29 42" stroke="#2a7fc1" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M25 13 C32 21,33 34,25 44" stroke="#6b3fa0" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+    </svg>
+    <div>
+      <div class="gf-brand">GARANTIS</div>
+      <div class="gf-sub">Asesores &nbsp;|&nbsp; Seguros</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    id:1, text:"¿A cuáles de estos riesgos está expuesta tu empresa?",
+    sub:"Selecciona todos los que apliquen",
+    type:"multi",
+    options:[
+      {label:"Robo o asalto",icon:"ti-shield-off"},
+      {label:"Incendio o explosión",icon:"ti-flame"},
+      {label:"Inundación o fenómeno natural",icon:"ti-droplet"},
+      {label:"Accidentes laborales",icon:"ti-alert-triangle"},
+      {label:"Falla de maquinaria o equipo",icon:"ti-tool"},
+      {label:"Responsabilidad civil ante terceros",icon:"ti-scale"},
+      {label:"Pérdida de datos o ciberataque",icon:"ti-lock-open"},
+      {label:"Interrupción del negocio",icon:"ti-building-factory-2"},
+    ],
+    weight:"exposure", min:1
+  },
+  {
+    id:2, text:"¿Qué es lo peor que podría pasarle a tu empresa en términos de pérdida?",
+    sub:"Elige la opción que más te preocupa",
+    type:"single",
+    options:[
+      {label:"Pérdida total de activos físicos (edificio, maquinaria)",icon:"ti-building"},
+      {label:"Una demanda millonaria de un cliente o tercero",icon:"ti-gavel"},
+      {label:"Un accidente grave de algún empleado",icon:"ti-first-aid-kit"},
+      {label:"Pérdida masiva de datos o información confidencial",icon:"ti-database-x"},
+      {label:"Paralización total de operaciones por semanas",icon:"ti-player-stop"},
+    ],
+    weight:"severity"
+  },
+  {
+    id:3, text:"¿Qué es lo que más te preocupa hoy en cuanto a riesgos empresariales?",
+    sub:"Selecciona tu principal preocupación",
+    type:"single",
+    options:[
+      {label:"No tener suficiente cobertura ante un siniestro grande",icon:"ti-alert-circle"},
+      {label:"Estar pagando seguros que no necesito o que sobran",icon:"ti-coin"},
+      {label:"No saber exactamente qué cubre lo que tengo contratado",icon:"ti-file-unknown"},
+      {label:"Que mis empleados no estén bien protegidos",icon:"ti-users"},
+      {label:"No haber revisado mis seguros en mucho tiempo",icon:"ti-clock-off"},
+    ],
+    weight:"awareness"
+  },
+  {
+    id:4, text:"¿Tomas las decisiones sobre los seguros de tu empresa con la asesoría de un agente profesional?",
+    sub:"Sé honesto — no hay respuesta incorrecta",
+    type:"single",
+    options:[
+      {label:"Sí, tengo un agente de confianza que me asesora siempre",icon:"ti-check"},
+      {label:"A veces, pero no siempre lo consulto",icon:"ti-adjustments-half"},
+      {label:"Casi no, tomo las decisiones solo o con mi equipo",icon:"ti-user"},
+      {label:"No, las contrato directamente sin asesoría",icon:"ti-x"},
+    ],
+    weight:"advisory", reverse:true
+  },
+  {
+    id:5, text:"¿Qué tan respaldado te sientes con los seguros que tienes contratados actualmente?",
+    sub:"Evaluación honesta de tu percepción actual",
+    type:"single",
+    options:[
+      {label:"Muy respaldado — tengo total confianza en mis coberturas",icon:"ti-shield-check"},
+      {label:"Medianamente respaldado — creo que me falta algo",icon:"ti-shield-half"},
+      {label:"Poco respaldado — tengo dudas sobre si es suficiente",icon:"ti-shield-x"},
+      {label:"No lo sé — nunca lo he analizado a fondo",icon:"ti-help"},
+    ],
+    weight:"confidence", reverse:true
+  },
+  {
+    id:6, text:"¿Crees que lo que pagas en seguros es justo en relación a lo que recibes?",
+    sub:"Tu percepción sobre el valor de tus pólizas",
+    type:"single",
+    options:[
+      {label:"Sí, estoy convencido de que pago un precio justo",icon:"ti-thumb-up"},
+      {label:"Creo que pago demasiado por lo que cubro",icon:"ti-trending-up"},
+      {label:"Creo que pago poco y me falta cobertura",icon:"ti-trending-down"},
+      {label:"No tengo manera de saberlo — nunca lo he comparado",icon:"ti-question-mark"},
+    ],
+    weight:"value", reverse:true
+  },
+  {
+    id:7, text:"¿Conoces con claridad los alcances y limitaciones de tus pólizas actuales?",
+    sub:"¿Sabes exactamente qué cubre y qué NO cubre cada póliza?",
+    type:"single",
+    options:[
+      {label:"Sí, conozco muy bien todas mis pólizas y sus detalles",icon:"ti-book"},
+      {label:"Conozco lo básico, pero no los detalles finos",icon:"ti-book-2"},
+      {label:"Tengo poca idea — nunca lo he leído a fondo",icon:"ti-book-off"},
+      {label:"No tengo ni idea de qué cubre exactamente lo que contrato",icon:"ti-file-x"},
+    ],
+    weight:"knowledge", reverse:true
+  },
+  {
+    id:8, text:"¿Tu empresa tiene seguros para sus empleados?",
+    sub:"Selecciona todos los que tienen contratados actualmente",
+    type:"multi",
+    options:[
+      {label:"Seguro de vida colectivo",icon:"ti-heart"},
+      {label:"Seguro de gastos médicos mayores",icon:"ti-stethoscope"},
+      {label:"Seguro de accidentes personales",icon:"ti-first-aid-kit"},
+      {label:"Seguro de responsabilidad civil patronal",icon:"ti-shield-chevron"},
+      {label:"Fondo de ahorro o retiro",icon:"ti-piggy-bank"},
+      {label:"No tenemos ninguno de estos",icon:"ti-x"},
+    ],
+    weight:"employee", min:1
+  },
+  {
+    id:9, text:"¿Cuándo fue la última vez que se hizo un análisis formal de los riesgos de las operaciones de tu empresa?",
+    sub:"Un análisis profesional con un experto o consultor",
+    type:"single",
+    options:[
+      {label:"Hace menos de 1 año — estamos al día",icon:"ti-calendar-check"},
+      {label:"Hace 1 a 2 años",icon:"ti-calendar"},
+      {label:"Hace más de 3 años",icon:"ti-calendar-x"},
+      {label:"Nunca se ha hecho un análisis formal",icon:"ti-calendar-off"},
+    ],
+    weight:"lastReview", reverse:true
+  },
+  {
+    id:10, text:"¿Tus empleados han recibido capacitación básica en seguros o fianzas?",
+    sub:"¿Saben qué hacer en caso de un siniestro?",
+    type:"single",
+    options:[
+      {label:"Sí, tenemos capacitación regular al respecto",icon:"ti-school"},
+      {label:"Algunos han recibido capacitación básica",icon:"ti-users"},
+      {label:"Muy pocos — ha sido informal o esporádico",icon:"ti-user-minus"},
+      {label:"No, nunca han recibido capacitación en este tema",icon:"ti-user-x"},
+    ],
+    weight:"training", reverse:true
+  },
+];
+
+let currentStep = 0;
+let answers = {};
+let userData = {};
+const TOTAL_STEPS = questions.length;
+
+// ─── CONFIGURACIÓN ────────────────────────────────────────────────────────────
+// 1) WHATSAPP: número del agente (solo dígitos, con código de país)
+const WA_NUMBER = '529931600709';
+
+// 2) GOOGLE SHEETS: pega aquí la URL de tu Google Apps Script Web App
+//    (ver instrucciones en el archivo INSTRUCCIONES_SHEETS.txt)
+const SHEETS_URL = 'PEGA_AQUI_TU_URL_DE_APPS_SCRIPT';
+// ──────────────────────────────────────────────────────────────────────────────
+
+// Variables globales para el resultado actual
+let resultadoActual = {};
+
+function generarMensajeWA(quiereContacto) {
+  const r = resultadoActual;
+  const riesgos = (r.risks || []).join(', ') || 'No especificados';
+  const hallazgos = (r.findings || []).map(f => `• ${f.title}`).join('\n') || '—';
+  const contacto = quiereContacto ? '✅ SÍ desea ser contactado' : '❌ No desea ser contactado por ahora';
+
+  return encodeURIComponent(
+`🛡️ *NUEVO DIAGNÓSTICO DE RIESGOS — GARANTIS*
+━━━━━━━━━━━━━━━━━━━━━━
+👤 *Nombre:* ${r.nombre}
+🏢 *Empresa:* ${r.empresa}
+💼 *Cargo:* ${r.cargo}
+🏭 *Sector:* ${r.sector}
+📧 *Correo:* ${r.email || 'No proporcionado'}
+━━━━━━━━━━━━━━━━━━━━━━
+📊 *Nivel de riesgo:* ${r.nivel} (${r.score}%)
+━━━━━━━━━━━━━━━━━━━━━━
+⚠️ *Riesgos identificados:*
+${riesgos}
+━━━━━━━━━━━━━━━━━━━━━━
+🔍 *Hallazgos principales:*
+${hallazgos}
+━━━━━━━━━━━━━━━━━━━━━━
+📞 *Contacto:* ${contacto}
+🕐 *Fecha:* ${new Date().toLocaleString('es-MX')}
+━━━━━━━━━━━━━━━━━━━━━━`
+  );
+}
+
+async function enviarASheets(quiereContacto) {
+  if (!SHEETS_URL || SHEETS_URL === 'PEGA_AQUI_TU_URL_DE_APPS_SCRIPT') return;
+  const r = resultadoActual;
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fecha: new Date().toLocaleString('es-MX'),
+        nombre: r.nombre,
+        cargo: r.cargo,
+        empresa: r.empresa,
+        sector: r.sector,
+        email: r.email || '',
+        score: r.score,
+        nivel: r.nivel,
+        riesgos: (r.risks || []).join(', '),
+        hallazgos: (r.findings || []).map(f => f.title).join(' | '),
+        quiere_contacto: quiereContacto ? 'Sí' : 'No'
+      })
+    });
+  } catch(e) { console.warn('Sheets no disponible:', e); }
+}
+
+function ctaSi() {
+  document.getElementById('cta-btns').style.display = 'none';
+  document.getElementById('cta-resp-si').style.display = 'block';
+  document.getElementById('cta-resp-no').style.display = 'none';
+  // Generar link de WhatsApp con el resumen completo
+  const msg = generarMensajeWA(true);
+  document.getElementById('wa-link-si').href = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+  // Enviar a Google Sheets
+  enviarASheets(true);
+  // Enviar al backend local
+  actualizarContactoBackend(true);
+}
+
+function ctaNo() {
+  document.getElementById('cta-btns').style.display = 'none';
+  document.getElementById('cta-resp-no').style.display = 'block';
+  document.getElementById('cta-resp-si').style.display = 'none';
+  // Enviar a Google Sheets igualmente (para registro)
+  enviarASheets(false);
+  // Enviar al backend local
+  actualizarContactoBackend(false);
+}
+
+function buildDots() {
+  const wrap = document.getElementById('dots');
+  wrap.innerHTML = '';
+  for (let i = 0; i <= TOTAL_STEPS; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot';
+    d.id = 'dot-' + i;
+    wrap.appendChild(d);
+  }
+}
+
+function updateDots() {
+  for (let i = 0; i <= TOTAL_STEPS; i++) {
+    const d = document.getElementById('dot-' + i);
+    if (!d) continue;
+    d.className = 'step-dot' + (i === currentStep ? ' active' : (i < currentStep ? ' done' : ''));
+  }
+  const pct = (currentStep / TOTAL_STEPS) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+function startQuiz() {
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const cargo = document.getElementById('f-cargo').value;
+  const empresa = document.getElementById('f-empresa').value.trim();
+  const sector = document.getElementById('f-sector').value;
+  if (!nombre || !cargo || !empresa || !sector) {
+    alert('Por favor completa todos los campos obligatorios (*)');
+    return;
+  }
+  userData = { nombre, cargo, empresa, sector, email: document.getElementById('f-email').value.trim() };
+  document.getElementById('step-0').classList.add('hidden');
+  currentStep = 1;
+  renderQuestion(currentStep);
+  updateDots();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderQuestion(n) {
+  const cont = document.getElementById('steps-container');
+  cont.classList.remove('hidden');
+  cont.classList.remove('animated-fade');
+  void cont.offsetWidth; // Reflow to restart CSS animation
+  cont.classList.add('animated-fade');
+  const q = questions[n - 1];
+  const saved = answers[n];
+  let optHtml = '';
+
+  if (q.type === 'single') {
+    optHtml = '<div class="options-grid">';
+    q.options.forEach((opt, i) => {
+      const sel = (saved === i) ? 'selected' : '';
+      const dotInner = (saved === i) ? '<div class="radio-dot-inner"></div>' : '<div class="radio-dot-inner"></div>';
+      optHtml += `<button class="option-btn ${sel}" onclick="selectSingle(${n},${i},this)">
+        <div class="radio-dot">${dotInner}</div>
+        <i class="ti ${opt.icon} opt-icon"></i>${opt.label}</button>`;
+    });
+    optHtml += '</div>';
+  } else {
+    const selArr = saved || [];
+    optHtml = '<div class="checkbox-group">';
+    q.options.forEach((opt, i) => {
+      const ck = selArr.includes(i) ? 'checked' : '';
+      const tick = selArr.includes(i) ? '<i class="ti ti-check"></i>' : '';
+      optHtml += `<div class="check-item ${ck}" onclick="toggleCheck(${n},${i},this)">
+        <div class="check-box">${tick}</div>
+        <i class="ti ${opt.icon}" style="font-size:15px;color:#2a7fc1;flex-shrink:0"></i>
+        ${opt.label}</div>`;
+    });
+    optHtml += '</div>';
+  }
+
+  cont.innerHTML = `
+    <div class="card">
+      <div class="card-top">
+        <div class="q-num">${n}</div>
+        <div>
+          <div class="q-text">${q.text}</div>
+          <div class="q-sub">${q.sub}</div>
+        </div>
+      </div>
+      ${optHtml}
+      <div class="nav-row">
+        <button class="btn-prev" onclick="goBack()">
+          <i class="ti ti-arrow-left"></i> Anterior
+        </button>
+        <button class="btn-next" onclick="goNext(${n})">
+          ${n < TOTAL_STEPS ? 'Siguiente →' : 'Ver mi resultado →'}
+        </button>
+      </div>
+    </div>`;
+  updateDots();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectSingle(qn, idx, el) {
+  answers[qn] = idx;
+  el.closest('.options-grid').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleCheck(qn, idx, el) {
+  if (!answers[qn]) answers[qn] = [];
+  const q = questions[qn - 1];
+  
+  if (q.weight === 'employee') {
+    if (idx === 5) {
+      answers[qn] = answers[qn].filter(x => x === 5);
+      el.closest('.checkbox-group').querySelectorAll('.check-item').forEach((item, itemIdx) => {
+        if (itemIdx !== 5) {
+          item.classList.remove('checked');
+          const box = item.querySelector('.check-box');
+          if (box) box.innerHTML = '';
+        }
+      });
+    } else {
+      answers[qn] = answers[qn].filter(x => x !== 5);
+      const noneEl = el.closest('.checkbox-group').querySelectorAll('.check-item')[5];
+      if (noneEl) {
+        noneEl.classList.remove('checked');
+        const box = noneEl.querySelector('.check-box');
+        if (box) box.innerHTML = '';
+      }
+    }
+  }
+
+  const pos = answers[qn].indexOf(idx);
+  if (pos > -1) {
+    answers[qn].splice(pos, 1);
+    el.classList.remove('checked');
+    const box = el.querySelector('.check-box');
+    if (box) box.innerHTML = '';
+  } else {
+    answers[qn].push(idx);
+    el.classList.add('checked');
+    const box = el.querySelector('.check-box');
+    if (box) box.innerHTML = '<i class="ti ti-check"></i>';
+  }
+}
+
+function goNext(n) {
+  const q = questions[n - 1];
+  if (q.type === 'single' && answers[n] === undefined) { alert('Por favor selecciona una opción.'); return; }
+  if (q.type === 'multi' && (!answers[n] || answers[n].length < (q.min || 1))) { alert('Por favor selecciona al menos una opción.'); return; }
+  if (n < TOTAL_STEPS) { currentStep = n + 1; renderQuestion(currentStep); }
+  else { showResult(); }
+}
+
+function goBack() {
+  if (currentStep <= 1) {
+    document.getElementById('steps-container').classList.add('hidden');
+    const s0 = document.getElementById('step-0');
+    s0.classList.remove('hidden');
+    s0.classList.remove('animated-fade');
+    void s0.offsetWidth;
+    s0.classList.add('animated-fade');
+    currentStep = 0; updateDots();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  currentStep--; renderQuestion(currentStep);
+}
+
+function calcScore() {
+  let pts = 0, max = 0;
+  const riskScores = {
+    severity: [3, 3, 3, 3, 3],
+    awareness: [3, 1, 3, 2, 3],
+    advisory: [0, 1, 2, 3],
+    confidence: [0, 1, 2, 3],
+    value: [0, 1, 2, 3],
+    knowledge: [0, 1, 2, 3],
+    lastReview: [0, 1, 3, 4],
+    training: [0, 1, 2, 3]
+  };
+  questions.forEach((q, idx) => {
+    const n = idx + 1; const ans = answers[n];
+    if (q.type === 'single' && ans !== undefined && riskScores[q.weight]) {
+      const scores = riskScores[q.weight];
+      pts += scores[ans] || 0;
+      max += Math.max(...scores);
+    }
+  });
+  const exp = answers[1] || []; const emp = answers[8] || [];
+  pts += Math.min(exp.length * 0.8, 6); max += 6;
+  if (emp.includes(5)) { pts += 4; } max += 4;
+  return Math.round((pts / max) * 100);
+}
+
+function getRiskLevel(s) {
+  if (s >= 70) return { label: 'CRÍTICO', scoreColor: '#c0392b', badgeBg: '#fdf0f0', badgeColor: '#5a1a1a' };
+  if (s >= 55) return { label: 'MUY ALTO', scoreColor: '#e74c3c', badgeBg: '#fdf0f0', badgeColor: '#5a1a1a' };
+  if (s >= 40) return { label: 'ALTO', scoreColor: '#d68910', badgeBg: '#fffbea', badgeColor: '#5a4000' };
+  if (s >= 25) return { label: 'MEDIO', scoreColor: '#b7950b', badgeBg: '#fffde0', badgeColor: '#5a4400' };
+  return { label: 'BAJO', scoreColor: '#1e8449', badgeBg: '#eaf5ee', badgeColor: '#1a4a2a' };
+}
+
+function getFindings() {
+  const f = [];
+  if (answers[4] >= 2) f.push({ type: 'danger', icon: 'ti-alert-circle', title: 'Sin asesoría profesional continua', text: 'Tomar decisiones de seguros sin un agente de confianza expone a tu empresa a coberturas inadecuadas que se descubren hasta el momento del siniestro.' });
+  if (answers[5] >= 2) f.push({ type: 'danger', icon: 'ti-shield-x', title: 'Respaldo insuficiente percibido', text: 'Sientes que tu empresa no está bien cubierta. Esta percepción suele ser correcta — es el momento de hacer una revisión a fondo.' });
+  if (answers[7] >= 2) f.push({ type: 'danger', icon: 'ti-file-unknown', title: 'Desconocimiento de pólizas', text: 'No conocer los alcances de tus coberturas puede significar que ante un siniestro la aseguradora aplique exclusiones que ignorabas.' });
+  if (answers[9] >= 2) f.push({ type: 'warning', icon: 'ti-calendar-off', title: 'Análisis de riesgos desactualizado', text: 'Las operaciones cambian. Sin un análisis reciente, tus coberturas pueden estar desfasadas de tu realidad operativa actual.' });
+  if (answers[10] >= 2) f.push({ type: 'warning', icon: 'ti-users', title: 'Empleados sin capacitación en siniestros', text: 'Sin saber cómo actuar ante un siniestro, los empleados pueden cometer errores que comprometan la indemnización de tu póliza.' });
+  const emp = answers[8] || [];
+  if (emp.includes(5) || emp.length <= 1) f.push({ type: 'warning', icon: 'ti-heart-off', title: 'Protección insuficiente para empleados', text: 'Tu capital humano es tu activo más valioso. La falta de seguros aumenta la rotación y el riesgo de demandas laborales.' });
+  if (f.length === 0) f.push({ type: 'success', icon: 'ti-shield-check', title: 'Bases sólidas detectadas', text: 'Tu empresa muestra buena conciencia de riesgo. Una revisión profesional puede optimizar coberturas y reducir costos innecesarios.' });
+  return f;
+}
+
+function showResult() {
+  const score = calcScore();
+  const level = getRiskLevel(score);
+  const findings = getFindings();
+  const risks = (answers[1] || []).map(i => questions[0].options[i].label);
+
+  // Guardar resultado completo para WhatsApp y Sheets
+  resultadoActual = {
+    nombre: userData.nombre,
+    cargo: userData.cargo,
+    empresa: userData.empresa,
+    sector: userData.sector,
+    email: userData.email,
+    score: score,
+    nivel: level.label,
+    risks: risks,
+    findings: findings
+  };
+
+  // Guardar en la base de datos local y enviar correo si está configurado
+  enviarAlBackend();
+
+  document.getElementById('steps-container').classList.add('hidden');
+  document.getElementById('progress').style.width = '100%';
+  updateDots();
+
+  const matrixData = [
+    ['Medio', 'Alto', 'Muy Alto', 'Muy Alto', 'Muy Alto'],
+    ['Medio', 'Alto', 'Alto', 'Muy Alto', 'Muy Alto'],
+    ['Bajo', 'Medio', 'Alto', 'Alto', 'Muy Alto'],
+    ['Bajo', 'Bajo', 'Medio', 'Medio', 'Alto'],
+    ['Bajo', 'Bajo', 'Bajo', 'Bajo', 'Medio'],
+  ];
+  const rowLabels = ['Casi seguro', 'Muy posible', 'Posible', 'Poco probable', 'Muy poco probable'];
+  const colLabels = ['Insignificante', 'Menor', 'Moderado', 'Mayor', 'Crítica'];
+  const cellClass = { 'Bajo': 'cell-bajo', 'Medio': 'cell-medio', 'Alto': 'cell-alto', 'Muy Alto': 'cell-muyalto' };
+
+  // Eje X: Severidad (Pregunta 2)
+  const severityMapping = { 0: 3, 1: 4, 2: 3, 3: 2, 4: 4 };
+  const pc = severityMapping[answers[2]] !== undefined ? severityMapping[answers[2]] : 2;
+
+  // Eje Y: Probabilidad (Preguntas 1, 4, 9, 10)
+  const q1Count = (answers[1] || []).length;
+  const q1Points = Math.min(q1Count * 0.5, 4); // max 4 pts
+  const advisoryScore = answers[4] || 0; // 0 to 3
+  const reviewScore = answers[9] || 0; // 0 to 3
+  const trainingScore = answers[10] || 0; // 0 to 3
+  
+  const probScore = q1Points + advisoryScore + reviewScore + trainingScore; // max 13
+  let pr = 4;
+  if (probScore >= 10) pr = 0;
+  else if (probScore >= 7.5) pr = 1;
+  else if (probScore >= 5) pr = 2;
+  else if (probScore >= 2.5) pr = 3;
+
+  let mRows = '';
+  matrixData.forEach((row, ri) => {
+    mRows += `<tr><td class="hd-row" style="font-size:9px;padding:5px 3px;white-space:nowrap">${rowLabels[ri]}</td>`;
+    row.forEach((cell, ci) => {
+      const isU = (ri === pr && ci === pc) ? ' cell-user' : '';
+      mRows += `<td class="${cellClass[cell]}${isU}">${cell}${isU ? ' ★' : ''}</td>`;
+    });
+    mRows += '</tr>';
+  });
+
+  let fHtml = findings.map(f => `
+    <div class="finding-card ${f.type}">
+      <i class="ti ${f.icon} fc-icon"></i>
+      <div><div class="fc-title">${f.title}</div><div class="fc-text">${f.text}</div></div>
+    </div>`).join('');
+
+  let rHtml = risks.length
+    ? risks.map(r => `<span class="risk-tag">${r}</span>`).join('')
+    : '<span style="font-size:13px;color:#6b7a8d">No se seleccionaron riesgos específicos</span>';
+
+  const res = document.getElementById('result-section');
+  res.classList.remove('hidden');
+  res.classList.remove('animated-fade');
+  void res.offsetWidth;
+  res.classList.add('animated-fade');
+  res.innerHTML = `
+    <div class="result-hero">
+      <div class="company-name">${userData.empresa} · ${userData.sector}</div>
+      <h2>Diagnóstico de Riesgos Completado</h2>
+      <div class="respondent">${userData.cargo} — ${userData.nombre}</div>
+    </div>
+
+    <div class="card" style="text-align:center">
+      <div class="score-wrap">
+        <div class="score-big" style="color:${level.scoreColor}">${score}%</div>
+        <div class="score-sub">Nivel de exposición al riesgo</div>
+        <div class="score-badge" style="background:${level.badgeBg};color:${level.badgeColor}">${level.label}</div>
+      </div>
+    </div>
+
+    <div class="section-title">Riesgos identificados en tu operación</div>
+    <div class="card"><div class="risks-tag-wrap">${rHtml}</div></div>
+
+    <div class="section-title">Posición en la Matriz de Riesgo</div>
+    <div class="card">
+      <div style="font-size:11px;color:#6b7a8d;margin-bottom:10px">La estrella (★) marca el nivel de riesgo estimado para tu empresa.</div>
+      <div class="matrix-wrap">
+        <table class="risk-matrix">
+          <thead>
+            <tr><th class="hd-main" colspan="6">Matriz de Severidad · Garantis Asesores en Seguros</th></tr>
+            <tr>
+              <th class="hd-col" style="font-size:8px">Probabilidad / Severidad</th>
+              ${colLabels.map(l => `<th class="hd-col">${l}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>${mRows}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-title">Principales hallazgos</div>
+    <div class="findings-grid">${fHtml}</div>
+
+    <div class="section-title" style="margin-bottom:0.75rem">¿Quieres que te asesoremos?</div>
+    <div class="cta-asesoria-card" id="cta-asesoria-card">
+      <div class="cta-title">Obtén una asesoría profesional y sin costo</div>
+      <div class="cta-sub">Basándonos en tu diagnóstico, podemos identificar oportunidades para mejorar tus coberturas y optimizar lo que pagas en seguros.</div>
+      <div class="cta-btns" id="cta-btns">
+        <button class="cta-btn-si" onclick="ctaSi()">✅ Sí, me interesa</button>
+        <button class="cta-btn-no" onclick="ctaNo()">Ahora no</button>
+      </div>
+      <div style="display:none" id="cta-resp-si">
+        <strong>¡Excelente decisión!</strong> El equipo de <strong>Garantis</strong> te contactará pronto.<br>
+        También puedes escribirnos directamente ahora mismo:
+        <a class="wa-btn" id="wa-link-si" href="#" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Enviar mi resultado por WhatsApp
+        </a>
+      </div>
+      <div style="display:none" id="cta-resp-no">
+        <strong>Totalmente válido.</strong> Respetamos tu decisión. Este diagnóstico es tuyo y esperamos haber sido de utilidad.<br>
+        <span style="font-size:12px;color:#6b7a8d;display:block;margin-top:6px">Si en algún momento deseas una revisión profesional, el equipo de <strong>Garantis</strong> estará disponible para ti.</span>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-bottom:0.75rem">Tu equipo de asesores</div>
+    <div class="agent-card">
+      <div class="agent-avatar" style="background:linear-gradient(135deg,#2a7fc1,#6b3fa0);font-size:14px;letter-spacing:1px">
+        <svg width="26" height="30" viewBox="0 0 44 50" fill="none"><path d="M30 9 C37 17,38 30,29 42" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M25 13 C32 21,33 34,25 44" stroke="rgba(255,255,255,0.7)" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="agent-name">Garantis Asesores en Seguros</div>
+        <div class="agent-title">Moisés González · Agente Certificado · 18 años de trayectoria</div>
+        <a class="agent-phone" href="https://wa.me/+529931600709" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          993 160 0709
+        </a>
+        <div class="agent-cta">Permítenos asesorarte profesionalmente.</div>
+      </div>
+    </div>
+
+    <button class="restart-btn" onclick="restartApp()">
+      <i class="ti ti-refresh"></i> Hacer el diagnóstico de nuevo
+    </button>
+  `;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartApp() {
+  answers = {}; userData = {}; currentStep = 0;
+  document.getElementById('result-section').classList.add('hidden');
+  document.getElementById('steps-container').classList.add('hidden');
+  const s0 = document.getElementById('step-0');
+  s0.classList.remove('hidden');
+  s0.classList.remove('animated-fade');
+  void s0.offsetWidth;
+  s0.classList.add('animated-fade');
+  ['f-nombre', 'f-cargo', 'f-empresa', 'f-sector', 'f-email'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('progress').style.width = '0%';
+  updateDots();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildDots();
+updateDots();
+
+let currentDiagnosticoId = null;
+
+async function enviarAlBackend() {
+  const r = resultadoActual;
+  try {
+    const res = await fetch('/api/diagnosticos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre: r.nombre,
+        cargo: r.cargo,
+        empresa: r.empresa,
+        sector: r.sector,
+        email: r.email || '',
+        score: r.score,
+        nivel: r.nivel,
+        riesgos: r.risks,
+        hallazgos: r.findings
+      })
+    });
+    const data = await res.json();
+    if (data.id) {
+      currentDiagnosticoId = data.id;
+    }
+  } catch(e) { console.warn('Error al guardar en el backend local:', e); }
+}
+
+async function actualizarContactoBackend(quiereContacto) {
+  if (!currentDiagnosticoId) return;
+  try {
+    await fetch(`/api/diagnosticos/${currentDiagnosticoId}/contacto`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        quiere_contacto: quiereContacto ? 'Sí' : 'No'
+      })
+    });
+  } catch(e) { console.warn('Error al actualizar contacto en el backend local:', e); }
+}
+</script>
+</body>
+</html>

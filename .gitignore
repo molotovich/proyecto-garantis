@@ -1,0 +1,33 @@
+# Entorno Virtual
+.venv/
+venv/
+ENV/
+
+# Base de Datos (SQLite)
+*.db
+*.sqlite
+*.sqlite3
+garantis_diagnosticos.db
+
+# Compilación y Caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Variables de Entorno y Credenciales
+.env
+.env.*
+
+# Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.swp
+*.swo

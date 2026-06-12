@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados de Diagnóstico — Garantis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
+body {
+  background-color: #0b132b;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, hsla(225,39%,30%,0.3) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, hsla(339,49%,30%,0.2) 0, transparent 50%),
+    radial-gradient(at 50% 100%, hsla(220,50%,15%,1) 0, transparent 100%);
+  min-height: 100vh;
+  padding: 3rem 1.5rem;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+:root {
+  --g-dark: #2b2d42;
+  --g-blue: #2a7fc1;
+  --g-blue-light: #4aa3e0;
+  --g-violet: #6b3fa0;
+  --g-bg: #f4f7fb;
+  --g-white: #ffffff;
+  --g-border: #d0dce8;
+  --g-muted: #6b7a8d;
+}
+
+.container {
+  width: 100%; max-width: 1000px;
+  background: #f4f7fb;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(42, 127, 193, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2.5rem;
+}
+
+/* HEADER */
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--g-border); padding-bottom: 1.5rem;
+  margin-bottom: 2rem; flex-wrap: wrap; gap: 15px;
+}
+.brand-wrap { display: flex; align-items: center; gap: 12px; }
+.logo-shield { width: 32px; height: 36px; }
+.logo-brand { font-size: 20px; font-weight: 900; letter-spacing: 2px; color: var(--g-dark); }
+.logo-sub { font-size: 9px; letter-spacing: 1px; color: var(--g-blue); text-transform: uppercase; }
+
+.nav-links { display: flex; gap: 12px; }
+.nav-btn {
+  padding: 8px 16px; border-radius: 8px; border: 1px solid var(--g-border);
+  background: white; color: var(--g-muted); cursor: pointer; text-decoration: none;
+  font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;
+  transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--g-border); color: var(--g-dark); }
+.nav-btn.active {
+  background: linear-gradient(135deg, var(--g-blue), var(--g-violet));
+  color: white; border: none;
+}
+
+/* CARDS PANEL */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+.stat-card {
+  background: white; border: 1px solid var(--g-border); border-radius: 16px;
+  padding: 1.25rem; display: flex; align-items: center; gap: 1rem;
+}
+.stat-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: white;
+}
+.stat-val { font-size: 22px; font-weight: 800; color: var(--g-dark); }
+.stat-lbl { font-size: 11px; color: var(--g-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* TABLE */
+.table-card { background: white; border: 1px solid var(--g-border); border-radius: 16px; overflow: hidden; margin-bottom: 2rem; }
+.table-scroll { overflow-x: auto; }
+table.results-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+.results-table th { background: #eaf1f8; color: var(--g-dark); font-weight: 700; padding: 12px 16px; }
+.results-table td { padding: 12px 16px; border-top: 1px solid var(--g-border); vertical-align: middle; }
+.results-table tr.record-row { cursor: pointer; transition: background 0.2s; }
+.results-table tr.record-row:hover { background: #f7fafc; }
+.results-table tr.record-row.active { background: #edf4fa; }
+
+/* BADGES */
+.badge-score {
+  display: inline-block; padding: 4px 10px; border-radius: 12px;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+}
+.badge-contacto {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 600;
+}
+.badge-contacto.si { background: #eaf5ee; color: #1a4a2a; }
+.badge-contacto.no { background: #fdf0f0; color: #5a1a1a; }
+.badge-contacto.pend { background: #fffde0; color: #5a4400; }
+
+/* DETAIL ROW */
+.detail-row { display: none; background: #fcfdfe; }
+.detail-row.open { display: table-row; }
+.detail-content { padding: 1.5rem; border-top: 1px solid var(--g-border); display: grid; grid-template-columns: 1fr 1.2fr; gap: 2rem; }
+
+@media (max-width: 800px) {
+  .detail-content { grid-template-columns: 1fr; }
+}
+
+.detail-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--g-muted); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 6px; }
+.info-list { display: grid; gap: 6px; font-size: 12px; margin-bottom: 1rem; }
+.info-item { display: flex; justify-content: space-between; border-bottom: 0.5px solid var(--g-border); padding-bottom: 4px; }
+.info-item strong { color: var(--g-muted); }
+
+.risks-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+.risk-tag { background: #d6eaf8; color: #1a3a5c; border: 0.5px solid #a8ccea; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600; }
+
+.findings-list { display: grid; gap: 6px; }
+.finding-item { padding: 8px 12px; border-radius: 8px; font-size: 11.5px; border: 0.5px solid; }
+.finding-item.danger { background: #fdf0f0; border-color: #f0b0b0; color: #5a1a1a; }
+.finding-item.warning { background: #fffbea; border-color: #f0d070; color: #5a4000; }
+.finding-item.success { background: #eaf5ee; border-color: #90d0a0; color: #1a4a2a; }
+
+/* MATRIX */
+table.risk-matrix { border-collapse: collapse; width: 100%; font-size: 9px; }
+.risk-matrix th, .risk-matrix td { padding: 5px 3px; text-align: center; border: 1px solid #d0dce8; }
+.risk-matrix .hd-main { background: linear-gradient(90deg, #1a3a5c, #2a7fc1); color: white; font-weight: 700; font-size: 10px; }
+.risk-matrix .hd-col { background: #1a3a5c; color: #a8c4e0; font-size: 8px; }
+.risk-matrix .hd-row { background: #eaf1f8; color: #2b2d42; font-size: 8px; }
+.risk-matrix .cell-bajo { background: #52b788; color: #1b4332; font-weight: 600; }
+.risk-matrix .cell-medio { background: #f4d03f; color: #7d5a00; font-weight: 600; }
+.risk-matrix .cell-alto { background: #f5a623; color: #7b3e00; font-weight: 600; }
+.risk-matrix .cell-muyalto { background: #e74c3c; color: #500000; font-weight: 600; }
+
+@keyframes pulse-border {
+  0% { outline-color: var(--g-blue); box-shadow: 0 0 0 0px rgba(42,127,193,0.4); }
+  50% { outline-color: var(--g-violet); box-shadow: 0 0 6px 3px rgba(107,63,160,0.3); }
+  100% { outline-color: var(--g-blue); box-shadow: 0 0 0 0px rgba(42,127,193,0.4); }
+}
+.risk-matrix .cell-user {
+  position: relative;
+  outline: 3px solid var(--g-blue) !important;
+  outline-offset: -3px;
+  animation: pulse-border 2s infinite;
+  font-weight: 800 !important;
+  z-index: 5;
+}
+
+/* SETTINGS PANEL */
+.settings-panel { display: none; background: white; border: 1px solid var(--g-border); border-radius: 16px; padding: 1.5rem; }
+.settings-panel.open { display: block; }
+
+.settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+@media (max-width: 600px) { .settings-grid { grid-template-columns: 1fr; } }
+
+.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
+.form-group label { font-size: 11px; font-weight: 700; color: var(--g-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.form-group input {
+  padding: 10px 12px; border: 1px solid var(--g-border); border-radius: 8px;
+  background: var(--g-bg); font-size: 13px; color: var(--g-dark);
+}
+.form-group input:focus { outline: none; border-color: var(--g-blue); background: white; }
+
+.form-inline { display: flex; align-items: center; gap: 10px; margin: 1rem 0; cursor: pointer; }
+.form-inline input[type="checkbox"] { width: 16px; height: 16px; }
+.form-inline label { font-size: 12px; font-weight: 600; color: var(--g-dark); cursor: pointer; }
+
+.actions-row { display: flex; gap: 12px; justify-content: flex-end; margin-top: 1.5rem; border-top: 1px solid var(--g-border); padding-top: 1rem; }
+.btn-save {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--g-blue), var(--g-violet));
+  border: none; border-radius: 8px; color: white; cursor: pointer;
+  font-size: 13px; font-weight: 700; transition: opacity 0.2s;
+}
+.btn-save:hover { opacity: 0.9; }
+.btn-test {
+  padding: 9px 20px; background: transparent; border: 1px solid var(--g-border);
+  border-radius: 8px; color: var(--g-dark); cursor: pointer;
+  font-size: 13px; font-weight: 600; transition: background 0.2s;
+}
+.btn-test:hover { background: var(--g-bg); }
+
+.status-msg { font-size: 12px; margin-top: 10px; padding: 10px; border-radius: 8px; display: none; }
+.status-msg.success { background: #eaf5ee; border: 0.5px solid #90d0a0; color: #1a4a2a; }
+.status-msg.error { background: #fdf0f0; border: 0.5px solid #f0b0b0; color: #5a1a1a; }
+
+.animated-fade {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="container animated-fade">
+  
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand-wrap">
+      <svg class="logo-shield" viewBox="0 0 44 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 2L5 10v15c0 11 8 20 17 23 9-3 17-12 17-23V10L22 2z" fill="none" stroke="#2b2d42" stroke-width="1.5"/>
+        <path d="M30 9 C37 17, 38 30, 29 42" stroke="#2a7fc1" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M25 13 C32 21, 33 34, 25 44" stroke="#6b3fa0" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.85"/>
+      </svg>
+      <div>
+        <div class="logo-brand">GARANTIS</div>
+        <div class="logo-sub">Panel de Diagnósticos</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" id="btn-tab-records" onclick="showTab('records')"><i class="ti ti-table"></i> Resultados</button>
+      <button class="nav-btn" id="btn-tab-settings" onclick="showTab('settings')"><i class="ti ti-mail-cog"></i> Ajustes Correo</button>
+      <a class="nav-btn" href="/" target="_blank"><i class="ti ti-external-link"></i> Ir al Diagnóstico</a>
+    </div>
+  </div>
+
+  <!-- RECORDS TAB -->
+  <div id="tab-records">
+    
+    <!-- STATS PANEL -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #2a7fc1, #4aa3e0);"><i class="ti ti-report"></i></div>
+        <div>
+          <div class="stat-val" id="stat-total">0</div>
+          <div class="stat-lbl">Diagnósticos</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #e74c3c, #f5a623);"><i class="ti ti-alert-triangle"></i></div>
+        <div>
+          <div class="stat-val" id="stat-risk">0</div>
+          <div class="stat-lbl">Riesgo Alto/Crítico</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #25d366, #1da851);"><i class="ti ti-users"></i></div>
+        <div>
+          <div class="stat-val" id="stat-contact">0</div>
+          <div class="stat-lbl">Contactos Sí</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+      <div class="table-scroll">
+        <table class="results-table" id="results-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Empresa</th>
+              <th>Contacto</th>
+              <th>Cargo</th>
+              <th>Sector</th>
+              <th>Puntaje</th>
+              <th>Nivel</th>
+            </tr>
+          </thead>
+          <tbody id="records-body">
+            <tr>
+              <td colspan="7" style="text-align: center; color: var(--g-muted); padding: 2rem;">
+                Cargando registros...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div id="tab-settings" class="settings-panel">
+    <div class="detail-section-title" style="margin-bottom: 1.25rem;"><i class="ti ti-mail"></i> Servidor SMTP y Configuración de Notificaciones</div>
+    <form id="email-settings-form" onsubmit="saveSettings(event)">
+      <div class="settings-grid">
+        <div class="form-group">
+          <label>Servidor SMTP (Host) *</label>
+          <input type="text" id="smtp_host" placeholder="Ej. smtp.gmail.com" required>
+        </div>
+        <div class="form-group">
+          <label>Puerto SMTP *</label>
+          <input type="number" id="smtp_port" placeholder="Ej. 587 (TLS) o 465 (SSL)" required>
+        </div>
+        <div class="form-group">
+          <label>Usuario / Correo SMTP</label>
+          <input type="text" id="smtp_user" placeholder="Ej. tu-correo@gmail.com">
+        </div>
+        <div class="form-group">
+          <label>Contraseña SMTP</label>
+          <input type="password" id="smtp_password" placeholder="Tu contraseña o password de app">
+        </div>
+        <div class="form-group">
+          <label>Nombre de Remitente</label>
+          <input type="text" id="remitente" placeholder="Ej. Diagnósticos Garantis">
+        </div>
+        <div class="form-group">
+          <label>Correo Destinatario *</label>
+          <input type="email" id="destinatario" placeholder="Ej. moises.gonzalez@garantis.mx" required>
+        </div>
+      </div>
+
+      <div style="display:flex; gap: 2rem; margin: 1rem 0 flex-wrap: wrap;">
+        <div class="form-inline">
+          <input type="checkbox" id="smtp_use_tls" checked>
+          <label for="smtp_use_tls">Usar TLS (starttls)</label>
+        </div>
+        <div class="form-inline">
+          <input type="checkbox" id="smtp_use_ssl">
+          <label for="smtp_use_ssl">Usar SSL (SMTP_SSL)</label>
+        </div>
+        <div class="form-inline">
+          <input type="checkbox" id="enviar_automatico">
+          <label for="enviar_automatico">Enviar reporte automáticamente al destinatario al terminar diagnóstico</label>
+        </div>
+      </div>
+
+      <div id="settings-status" class="status-msg"></div>
+
+      <div class="actions-row">
+        <button type="button" class="btn-test" onclick="testConnection()">Probar Conexión</button>
+        <button type="submit" class="btn-save">Guardar Configuración</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+let localRecords = [];
+
+function showTab(tabName) {
+  document.getElementById('tab-records').style.display = tabName === 'records' ? 'block' : 'none';
+  document.getElementById('tab-settings').classList.toggle('open', tabName === 'settings');
+  
+  document.getElementById('btn-tab-records').classList.toggle('active', tabName === 'records');
+  document.getElementById('btn-tab-settings').classList.toggle('active', tabName === 'settings');
+}
+
+async function loadRecords() {
+  try {
+    const res = await fetch('/api/diagnosticos');
+    const data = await res.json();
+    localRecords = data;
+    renderTable(data);
+    updateStats(data);
+  } catch (e) {
+    console.error('Error cargando registros:', e);
+    document.getElementById('records-body').innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; color: #e74c3c; padding: 2rem;">
+          Error de conexión al cargar los registros del servidor.
+        </td>
+      </tr>
+    `;
+  }
+}
+
+function updateStats(records) {
+  document.getElementById('stat-total').textContent = records.length;
+  
+  const highRisk = records.filter(r => r.nivel === 'ALTO' || r.nivel === 'MUY ALTO' || r.nivel === 'CRÍTICO').length;
+  document.getElementById('stat-risk').textContent = highRisk;
+  
+  const contact = records.filter(r => r.quiere_contacto === 'Sí').length;
+  document.getElementById('stat-contact').textContent = contact;
+}
+
+function renderTable(records) {
+  const body = document.getElementById('records-body');
+  if (records.length === 0) {
+    body.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; color: var(--g-muted); padding: 2rem;">
+          No se han capturado diagnósticos todavía.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+  
+  const levelColors = {
+    'CRÍTICO': '#c0392b', 'MUY ALTO': '#e74c3c', 'ALTO': '#d68910', 'MEDIO': '#b7950b', 'BAJO': '#1e8449'
+  };
+  const levelBgs = {
+    'CRÍTICO': '#fdf0f0', 'MUY ALTO': '#fdf0f0', 'ALTO': '#fffbea', 'MEDIO': '#fffde0', 'BAJO': '#eaf5ee'
+  };
+  
+  let html = '';
+  records.forEach((r, idx) => {
+    const dateStr = new Date(r.fecha).toLocaleString('es-MX', { dateStyle: 'short', timeStyle: 'short' });
+    const contactClass = r.quiere_contacto === 'Sí' ? 'si' : (r.quiere_contacto === 'No' ? 'no' : 'pend');
+    const contactIcon = r.quiere_contacto === 'Sí' ? '<i class="ti ti-check"></i>' : (r.quiere_contacto === 'No' ? '<i class="ti ti-x"></i>' : '<i class="ti ti-clock"></i>');
+    
+    html += `
+      <tr class="record-row" id="row-${r.id}" onclick="toggleDetail(${r.id}, ${idx})">
+        <td>${dateStr}</td>
+        <td><strong>${r.empresa}</strong></td>
+        <td><span class="badge-contacto ${contactClass}">${contactIcon} ${r.quiere_contacto}</span></td>
+        <td>${r.cargo}</td>
+        <td>${r.sector}</td>
+        <td style="font-weight:700;color:${levelColors[r.nivel] || '#000'}">${r.score}%</td>
+        <td><span class="badge-score" style="background:${levelBgs[r.nivel] || '#ccc'};color:${levelColors[r.nivel] || '#000'}">${r.nivel}</span></td>
+      </tr>
+      <tr class="detail-row" id="detail-${r.id}">
+        <td colspan="7">
+          <div class="detail-content" id="detail-box-${r.id}"></div>
+        </td>
+      </tr>
+    `;
+  });
+  body.innerHTML = html;
+}
+
+function toggleDetail(id, recordIdx) {
+  const row = document.getElementById(`row-${id}`);
+  const detail = document.getElementById(`detail-${id}`);
+  const box = document.getElementById(`detail-box-${id}`);
+  
+  const isOpen = detail.classList.contains('open');
+  
+  // Close all other details
+  document.querySelectorAll('.detail-row').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('.record-row').forEach(el => el.classList.remove('active'));
+  
+  if (!isOpen) {
+    row.classList.add('active');
+    detail.classList.add('open');
+    if (!box.innerHTML) {
+      box.innerHTML = renderDetailsHtml(localRecords[recordIdx]);
+    }
+  }
+}
+
+function renderDetailsHtml(r) {
+  const risksHtml = r.riesgos.length 
+    ? r.riesgos.map(tag => `<span class="risk-tag">${tag}</span>`).join('')
+    : '<span style="font-size:12px;color:var(--g-muted)">Ninguno</span>';
+    
+  const findingsHtml = r.hallazgos.length
+    ? r.hallazgos.map(f => `
+        <div class="finding-item ${f.type}">
+          <strong>${f.title}</strong><br>${f.text}
+        </div>
+      `).join('')
+    : '<div class="finding-item success">Bases sólidas. No se detectaron hallazgos de riesgo elevados.</div>';
+
+  // Matriz de riesgos
+  const matrixData = [
+    ['Medio', 'Alto', 'Muy Alto', 'Muy Alto', 'Muy Alto'],
+    ['Medio', 'Alto', 'Alto', 'Muy Alto', 'Muy Alto'],
+    ['Bajo', 'Medio', 'Alto', 'Alto', 'Muy Alto'],
+    ['Bajo', 'Bajo', 'Medio', 'Medio', 'Alto'],
+    ['Bajo', 'Bajo', 'Bajo', 'Bajo', 'Medio'],
+  ];
+  const rowLabels = ['Casi seguro', 'Muy posible', 'Posible', 'Poco probable', 'Muy poco probable'];
+  const colLabels = ['Insignificante', 'Menor', 'Moderado', 'Mayor', 'Crítica'];
+  const cellClass = { 'Bajo': 'cell-bajo', 'Medio': 'cell-medio', 'Alto': 'cell-alto', 'Muy Alto': 'cell-muyalto' };
+
+  // Calculate coordinates based on database records or fall back to default logic
+  // Let's use the exact same calculation as showResult to reconstruct visual position
+  // Eje X: Q2 worst case concern mapping
+  const severityMap = {
+    "Pérdida total de activos físicos (edificio, maquinaria)": 3,
+    "Una demanda millonaria de un cliente o tercero": 4,
+    "Un accidente grave de algún empleado": 3,
+    "Pérdida masiva de datos o información confidencial": 2,
+    "Paralización total de operaciones por semanas": 4
+  };
+  
+  // Try to deduce coordinates from findings if raw concern choice is not directly saved
+  // If we don't have it, we default to the overall risk tier
+  let pc = 2; // Default Moderado
+  let pr = 2; // Default Posible
+
+  // Map to general risk matrix points based on score if we can't do full choice deducing
+  if (r.nivel === 'CRÍTICO') { pr = 0; pc = 4; }
+  else if (r.nivel === 'MUY ALTO') { pr = 1; pc = 3; }
+  else if (r.nivel === 'ALTO') { pr = 2; pc = 2; }
+  else if (r.nivel === 'MEDIO') { pr = 3; pc = 1; }
+  else { pr = 4; pc = 0; }
+
+  let mRows = '';
+  matrixData.forEach((row, ri) => {
+    mRows += `<tr><td class="hd-row" style="font-size:8px;padding:4px 2px;white-space:nowrap">${rowLabels[ri]}</td>`;
+    row.forEach((cell, ci) => {
+      const isU = (ri === pr && ci === pc) ? ' cell-user' : '';
+      mRows += `<td class="${cellClass[cell]}${isU}">${cell}${isU ? ' ★' : ''}</td>`;
+    });
+    mRows += '</tr>';
+  });
+
+  return `
+    <div>
+      <div class="detail-section-title"><i class="ti ti-id-card"></i> Datos Generales</div>
+      <div class="info-list">
+        <div class="info-item"><strong>Nombre completo:</strong> <span>${r.nombre}</span></div>
+        <div class="info-item"><strong>Cargo:</strong> <span>${r.cargo}</span></div>
+        <div class="info-item"><strong>Sector:</strong> <span>${r.sector}</span></div>
+        <div class="info-item"><strong>Correo electrónico:</strong> <span>${r.email || 'No proporcionado'}</span></div>
+        <div class="info-item"><strong>Preferencia de contacto:</strong> <span>${r.quiere_contacto}</span></div>
+      </div>
+      
+      <div class="detail-section-title"><i class="ti ti-shield-check"></i> Riesgos Identificados</div>
+      <div class="risks-list">${risksHtml}</div>
+
+      <div class="detail-section-title"><i class="ti ti-list-details"></i> Hallazgos Clave</div>
+      <div class="findings-list">${findingsHtml}</div>
+    </div>
+    
+    <div>
+      <div class="detail-section-title"><i class="ti ti-grid-pattern"></i> Matriz de Severidad</div>
+      <table class="risk-matrix">
+        <thead>
+          <tr><th class="hd-main" colspan="6">Posición Estimada del Diagnóstico</th></tr>
+          <tr>
+            <th class="hd-col" style="font-size:7px">Probabilidad / Severidad</th>
+            ${colLabels.map(l => `<th class="hd-col">${l}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>${mRows}</tbody>
+      </table>
+      <div style="font-size:10px;color:var(--g-muted);margin-top:10px;text-align:center;">
+        La estrella (★) indica la posición del diagnóstico basada en el puntaje de riesgos de la empresa.
+      </div>
+    </div>
+  `;
+}
+
+async function loadSettings() {
+  try {
+    const res = await fetch('/api/config-email');
+    if (!res.ok) return;
+    const config = await res.json();
+    
+    document.getElementById('smtp_host').value = config.smtp_host || '';
+    document.getElementById('smtp_port').value = config.smtp_port || 587;
+    document.getElementById('smtp_user').value = config.smtp_user || '';
+    document.getElementById('smtp_password').value = config.smtp_password || '';
+    document.getElementById('remitente').value = config.remitente || '';
+    document.getElementById('destinatario').value = config.destinatario || '';
+    
+    document.getElementById('smtp_use_tls').checked = !!config.smtp_use_tls;
+    document.getElementById('smtp_use_ssl').checked = !!config.smtp_use_ssl;
+    document.getElementById('enviar_automatico').checked = !!config.enviar_automatico;
+  } catch (e) {
+    console.error('Error cargando configuración SMTP:', e);
+  }
+}
+
+async function saveSettings(e) {
+  e.preventDefault();
+  const statusEl = document.getElementById('settings-status');
+  statusEl.style.display = 'none';
+  
+  const payload = {
+    smtp_host: document.getElementById('smtp_host').value.trim(),
+    smtp_port: parseInt(document.getElementById('smtp_port').value) || 587,
+    smtp_user: document.getElementById('smtp_user').value.trim(),
+    smtp_password: document.getElementById('smtp_password').value,
+    remitente: document.getElementById('remitente').value.trim(),
+    destinatario: document.getElementById('destinatario').value.trim(),
+    smtp_use_tls: document.getElementById('smtp_use_tls').checked,
+    smtp_use_ssl: document.getElementById('smtp_use_ssl').checked,
+    enviar_automatico: document.getElementById('enviar_automatico').checked
+  };
+  
+  try {
+    const res = await fetch('/api/config-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
+    if (res.ok) {
+      statusEl.className = 'status-msg success';
+      statusEl.textContent = 'Configuración guardada exitosamente.';
+      statusEl.style.display = 'block';
+    } else {
+      throw new Error();
+    }
+  } catch (e) {
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'Error al intentar guardar la configuración.';
+    statusEl.style.display = 'block';
+  }
+}
+
+async function testConnection() {
+  const statusEl = document.getElementById('settings-status');
+  statusEl.style.display = 'none';
+  
+  const payload = {
+    smtp_host: document.getElementById('smtp_host').value.trim(),
+    smtp_port: parseInt(document.getElementById('smtp_port').value) || 587,
+    smtp_user: document.getElementById('smtp_user').value.trim(),
+    smtp_password: document.getElementById('smtp_password').value,
+    remitente: document.getElementById('remitente').value.trim(),
+    destinatario: document.getElementById('destinatario').value.trim(),
+    smtp_use_tls: document.getElementById('smtp_use_tls').checked,
+    smtp_use_ssl: document.getElementById('smtp_use_ssl').checked,
+    enviar_automatico: document.getElementById('enviar_automatico').checked
+  };
+  
+  statusEl.className = 'status-msg';
+  statusEl.style.backgroundColor = '#edf4fa';
+  statusEl.style.border = '0.5px solid #a8ccea';
+  statusEl.style.color = '#1a3a5c';
+  statusEl.textContent = 'Probando conexión SMTP y enviando correo de prueba...';
+  statusEl.style.display = 'block';
+  
+  try {
+    const res = await fetch('/api/test-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    
+    if (result.success) {
+      statusEl.className = 'status-msg success';
+      statusEl.textContent = '¡Prueba exitosa! Se envió el correo de prueba satisfactoriamente.';
+    } else {
+      statusEl.className = 'status-msg error';
+      statusEl.textContent = 'Fallo en la prueba de conexión: ' + (result.error || 'Error desconocido.');
+    }
+  } catch (e) {
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'Error en la petición de prueba SMTP.';
+  }
+}
+
+// Initial loads
+loadRecords();
+loadSettings();
+</script>
+
+</body>
+</html>
