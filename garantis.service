@@ -1,0 +1,16 @@
+[Unit]
+Description=Servicio Flask para Diagnostico de Riesgos Garantis
+After=network.target
+
+[Service]
+# Asume que el proyecto estará en /var/www/proyecto-garantis y correrá bajo el usuario 'www-data'
+# Ajusta el usuario, grupo y rutas según la configuración de tu servidor.
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/proyecto-garantis
+Environment="PATH=/var/www/proyecto-garantis/.venv/bin"
+ExecStart=/var/www/proyecto-garantis/.venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
